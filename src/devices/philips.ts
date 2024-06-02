@@ -7,7 +7,7 @@ import tz from '../converters/toZigbee';
 import * as ota from '../lib/ota';
 import * as reporting from '../lib/reporting';
 import {philipsOnOff, philipsLight, philipsFz, philipsTz} from '../lib/philips';
-import {quirkCheckinInterval} from '../lib/modernExtend';
+import {deviceEndpoints, quirkCheckinInterval, identify} from '../lib/modernExtend';
 
 const e = exposes.presets;
 const ea = exposes.access;
@@ -1112,6 +1112,16 @@ const definitions: Definition[] = [
         vendor: 'Philips',
         description: 'Hue white and color ambiance LightStrip outdoor 2m',
         extend: [philipsLight({colorTemp: {range: undefined}, color: true})],
+    },
+    {
+        zigbeeModel: ['LCW004'],
+        model: '046677585235',
+        vendor: 'Philips',
+        description: 'Hue Dymera indoor and outdoor wall light',
+        extend: [
+            deviceEndpoints({endpoints: {'top': 11, 'bottom': 12}}),
+            philipsLight({colorTemp: {range: [153, 500]}, color: true, endpointNames: ['top', 'bottom']}),
+        ],
     },
     {
         zigbeeModel: ['LCA001', 'LCA002', 'LCA003'],
@@ -2809,6 +2819,13 @@ const definitions: Definition[] = [
         vendor: 'Philips',
         description: 'Hue white ambiance Aurelle round panel light',
         extend: [philipsLight({colorTemp: {range: [153, 454]}})],
+    },
+    {
+        zigbeeModel: ['929003597901'],
+        model: '929003597901',
+        vendor: 'Philips',
+        description: 'Hue white ambiance Aurelle round panel light',
+        extend: [identify(), philipsLight({colorTemp: {range: [153, 454]}})],
     },
     {
         zigbeeModel: ['3418331P6'],
